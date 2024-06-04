@@ -63,7 +63,10 @@ public class UserService : IUserService
     
     public async Task<IEnumerable<Rule>> GetUserRoles(int userId)
     {
-        var userRules =  await _dbContext.UserRules.Include(ur => ur.Rule).Where(ur => ur.UserId == userId).ToListAsync();
+        var userRules =  await _dbContext.UserRules
+            .Include(ur => ur.Rule)
+            .ThenInclude(r => r.Entitlement)
+            .Where(ur => ur.UserId == userId).ToListAsync();
         return userRules.Select(ur => ur.Rule);
     }
 

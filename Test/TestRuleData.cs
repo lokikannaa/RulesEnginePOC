@@ -27,7 +27,7 @@ namespace RulesEnginePOC.Test
                                 Value = "200"
                             }
                         ],
-                    CriteriaOperator = OperatorType.And,
+                    Operator = OperatorType.And,
                 }
             };
         }

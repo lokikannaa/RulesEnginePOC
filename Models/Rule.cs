@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace RulesEnginePOC.Models
 {
@@ -11,6 +12,8 @@ namespace RulesEnginePOC.Models
         public int Id { get; set; }
         [Column("rule_name")]
         public string Name { get; set; }
+        [Column("entitlement_id")]
+        public int EntitlementId { get; set; }
         [Column("criteria", TypeName = "jsonb")]
         public Criteria Criteria { get; set; }
         [Column("is_active")]
@@ -20,8 +23,9 @@ namespace RulesEnginePOC.Models
         [Column("updated_date")]
         public DateTime UpdatedDate { get; set; }
 
-        [NotMapped]
-        public IEnumerable<Rule>? NestedRules { get; set; }
-    }
+        public Entitlement? Entitlement { get; set; }
 
+        [NotMapped]
+        public IEnumerable<Rule>? ChildRules { get; set; }
+    }
 }

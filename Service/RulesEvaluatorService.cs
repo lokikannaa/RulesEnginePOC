@@ -32,7 +32,7 @@ namespace RulesEnginePOC.Service
             var reRules = rules.Select(rule => new RulesEngine.Models.Rule
             {
                 RuleName = rule.Name,
-                Operator = rule.NestedRules != null ? rule.Criteria.CriteriaOperator.ToString() : null,
+                Operator = rule.ChildRules != null ? rule.Criteria.Operator.ToString() : null,
                 SuccessEvent = "true",
                 Expression = GetExpresstionString(rule.Criteria)
             });
@@ -43,7 +43,7 @@ namespace RulesEnginePOC.Service
         private string GetExpresstionString(Criteria criteria)
         {
             var expressions = criteria.Items.Select(GetExpresstionString).ToList();
-            return string.Join(criteria.CriteriaOperator.ToString(), expressions);
+            return string.Join(criteria.Operator.ToString(), expressions);
         }
 
         private string GetExpresstionString(Criterion criterion)

@@ -32,6 +32,8 @@
             };
 
             modelBuilder.Entity<Rule>()
+                .HasOne(r => r.Entitlement);
+            modelBuilder.Entity<Rule>()
                 .Property(r => r.Criteria).HasColumnName("criteria")
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, serializerOptions),
