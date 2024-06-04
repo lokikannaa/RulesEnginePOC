@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RulesEnginePOC.Service;
+using System.Dynamic;
+using System.Net;
 
 namespace RulesEnginePOC.Controller
 {
@@ -13,14 +15,19 @@ namespace RulesEnginePOC.Controller
             _entitlementService = entitlementService;
         }
 
-        [HttpGet("vehicle/{id}")]
+        [HttpGet("vehicle/{vehicleId}")]
         public async Task<IActionResult> GetVehicleId(int vehicleId)
         {
             IEnumerable<string> requiredEntitlements = ["BaseVehicleId"];
 
-            if (!await _entitlementService.HasAccess(requiredEntitlements, HttpContext, vehicleId))
+            var inputs = new dynamic[]
             {
-                return Unauthorized();
+                new { VehicleId = vehicleId }
+            };
+
+            if (! _entitlementService.HasAccess(requiredEntitlements, HttpContext, inputs))
+            {
+                return StatusCode((int)HttpStatusCode.Forbidden);
             }
 
             return Ok("I have access to this Vehicle!");

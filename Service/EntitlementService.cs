@@ -1,4 +1,5 @@
 ﻿
+using RulesEngine.Extensions;
 using RulesEngine.Models;
 using Rule = RulesEnginePOC.Models.Rule;
 
@@ -12,17 +13,33 @@ namespace RulesEnginePOC.Service
             _rulesEvaluatorService = rulesEvaluatorService;
         }
 
-        public async Task<bool> HasAccess(IEnumerable<string> requiredEntitlements, HttpContext httpContext, dynamic inputs)
+        public bool HasAccess(IEnumerable<string> requiredEntitlements, HttpContext httpContext, dynamic[] inputs)
         {
             var workflowName = "EntitlementWorkflow";
             if (httpContext.Items.TryGetValue("EntitlementRules", out var rules))
             {
                 var userRules = rules as IEnumerable<Rule>;
                 var re = _rulesEvaluatorService.CreateRulesEngine(userRules, workflowName);
-                List<RuleResultTree> response = await re.ExecuteAllRulesAsync(workflowName, inputs).Result;
+                List<RuleResultTree> results = re.ExecuteAllRulesAsync(workflowName, inputs).Result;
+
+                bool outcome = false;
+
+                //Different ways to show test results:
+                outcome = results.TrueForAll(r => r.IsSuccess);
+
+                results.OnSuccess((eventName) => {
+                    Console.WriteLine($"Result '{eventName}' is as expected.");
+                    outcome = true;
+                });
+
+                results.OnFail(() => {
+                    outcome = false;
+                });
+
+                return outcome;
             }
 
-            return await Task.FromResult(true);
+            return true;
         }
     }
 }

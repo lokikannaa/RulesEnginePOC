@@ -2,6 +2,6 @@
 {
     public interface IEntitlementService
     {
-        Task<bool> HasAccess(IEnumerable<string> requiredEntitlements, HttpContext httpContext, dynamic inputs);
+        bool HasAccess(IEnumerable<string> requiredEntitlements, HttpContext httpContext, dynamic[] inputs);
     }
 }

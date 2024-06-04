@@ -4,5 +4,5 @@
 
 # Get Vehicle
 
-GET {{WebHost}}/admin/vehicle/100
-X-User-Id: {{userId}}
+GET {{WebHost}}/admin/vehicle/10
+X-User-Id: {{userId}} 

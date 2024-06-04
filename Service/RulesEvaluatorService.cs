@@ -1,6 +1,7 @@
-﻿using RulesEngine.Interfaces;
-using RulesEngine.Models;
+﻿using RulesEngine.Models;
 using RulesEnginePOC.Models;
+using System.Data;
+using System.Text;
 using Rule = RulesEnginePOC.Models.Rule;
 
 namespace RulesEnginePOC.Service
@@ -28,12 +29,12 @@ namespace RulesEnginePOC.Service
 
         private IEnumerable<RulesEngine.Models.Rule> ToReRules(IEnumerable<Rule> rules)
         {
-            var reRules = rules.Select(rules => new RulesEngine.Models.Rule
+            var reRules = rules.Select(rule => new RulesEngine.Models.Rule
             {
-                RuleName = rules.Name,
-                Operator = rules.Criteria.CriteriaOperator.ToString(),
+                RuleName = rule.Name,
+                Operator = rule.NestedRules != null ? rule.Criteria.CriteriaOperator.ToString() : null,
                 SuccessEvent = "true",
-                Expression = GetExpresstionString(rules.Criteria)
+                Expression = GetExpresstionString(rule.Criteria)
             });
 
             return reRules;
@@ -41,13 +42,13 @@ namespace RulesEnginePOC.Service
 
         private string GetExpresstionString(Criteria criteria)
         {
-            var expressions = criteria.Items.Select(GetExpresstionString);
-            return string.Join(criteria.CriteriaOperator.ToString(), " " + expressions + " ");
+            var expressions = criteria.Items.Select(GetExpresstionString).ToList();
+            return string.Join(criteria.CriteriaOperator.ToString(), expressions);
         }
 
         private string GetExpresstionString(Criterion criterion)
         {
-            return $"{criterion.Field} {GetOperator(criterion.Operator)} {criterion.Value}";
+            return $" {criterion.Field} {GetOperator(criterion.Operator)} {criterion.Value} ";
         }
         private string GetOperator(OperatorType operatorType)
         {
