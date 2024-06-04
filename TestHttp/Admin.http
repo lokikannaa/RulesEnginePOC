@@ -1,0 +1,8 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+@WebHost = http://localhost:5238
+@userId = 4
+
+# Get Vehicle
+
+GET {{WebHost}}/admin/vehicle/100
+X-User-Id: {{userId}}
