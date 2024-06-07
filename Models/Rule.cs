@@ -9,8 +9,9 @@ namespace RulesEnginePOC.Models
     public class Rule
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string RuleName { get; set; }
         public int EntitlementId { get; set; }
         public Criteria Criteria { get; set; }
         public bool IsActive { get; set; }
@@ -18,7 +19,7 @@ namespace RulesEnginePOC.Models
         public DateTime UpdatedDate { get; set; }
         public RuleActions? Actions { get; set; }
 
-        public IEnumerable<Rule>? ChildRules { get; set; }
+        public ICollection<Rule>? ChildRules { get; set; }
         public Entitlement? Entitlement { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace RulesEnginePOC.Controller
                 new { VehicleId = vehicleId }
             };
 
-            if (! _entitlementService.HasAccess(requiredEntitlements, HttpContext, inputs))
+            if (!_entitlementService.HasAccess(requiredEntitlements, HttpContext, inputs))
             {
                 return StatusCode((int)HttpStatusCode.Forbidden);
             }
@@ -51,23 +51,30 @@ namespace RulesEnginePOC.Controller
             var results = _entitlementService.Evaluate(requiredEntitlements, HttpContext, new dynamic[]
             {
                 new
-                {
-                    ContentSiloIds = request.ContentSiloIds,
-                    TaxonomyId = request.TaxonomyId,
-                    VehicleYear = request.VehicleYear,
-                    VehicleMake = request.VehicleMake
+                { 
+                    request.ContentSiloIds,
+                    request.TaxonomyId,
+                    request.VehicleYear,
+                    request.VehicleMake
                 }
             });
+            var outcome = results.FirstOrDefault(r => r.IsSuccess)?.ActionResult.Output;
 
-            return Ok(results.FirstOrDefault(r => r.IsSuccess).ActionResult.Output);
+            return Ok(outcome.ToString());
         }
     }
 
     public class ContentSiloRequest
     {
-        public IEnumerable<int>? ContentSiloIds { get; set; }
-        public int? TaxonomyId { get; set; }
+        public IEnumerable<string>? ContentSiloIds { get; set; }
+        public string TaxonomyId { get; set; }
         public int VehicleYear { get; set; }
         public string VehicleMake { get; set; }
+    }
+
+    public class ContentSiloResponse
+    {
+        public IEnumerable<string> ContentSiloIds { get; set; }
+        public IEnumerable<string> VehicleMakes { get; set; }
     }
 }

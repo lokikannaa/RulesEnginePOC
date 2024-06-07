@@ -32,19 +32,22 @@ namespace RulesEnginePOC.Service
             }
         }
 
-        public async Task<Rule> GetRule(int id) => await _dbContext.Rules.FindAsync(id);
+        public async Task<Rule> GetRule(int id) => 
+            await _dbContext.Rules
+            .Include(r => r.ChildRules)
+            .FirstAsync(r => r.Id == id);
 
-        public async Task<IEnumerable<Rule>> GetAllRules()
-        {
-            return await _dbContext.Rules.ToListAsync();
-        }
+        public async Task<IEnumerable<Rule>> GetAllRules() =>
+            await _dbContext.Rules
+                .Include(r => r.ChildRules)
+                .ToListAsync();
 
         public async Task<Rule> UpdateRule(Rule rule)
         {
             var existingRule = await _dbContext.Rules.FindAsync(rule.Id);
             if (existingRule != null)
             {
-                existingRule.Name = rule.Name;
+                existingRule.RuleName = rule.RuleName;
                 existingRule.Criteria = rule.Criteria;
                 existingRule.IsActive = rule.IsActive;
                 existingRule.UpdatedDate = DateTime.UtcNow;

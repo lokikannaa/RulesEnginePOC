@@ -9,7 +9,7 @@ namespace RulesEnginePOC.Test
             return new Rule
             {
                 Id = 1,
-                Name = "Test Rule",
+                RuleName = "Test Rule",
                 IsActive = true,
                 Criteria = new Criteria
                 {

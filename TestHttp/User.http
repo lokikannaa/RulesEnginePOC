@@ -1,13 +1,13 @@
 @WebHost = http://localhost:5238
-@userId = 4
+@userId = 1
 
 ### Create User
 POST {{WebHost}}/users
 Content-Type: application/json
 
 {
-    "userName": "Loki",
-    "apiKey": "A123"
+    "userName": "Bob",
+    "apiKey": "B123"
 }
 
 ### Delete User
@@ -19,10 +19,10 @@ GET {{WebHost}}/users
 X-User-Id: {{userId}}
 
 ### Add Rule to User
-POST {{WebHost}}/users/4/rules/3
+POST {{WebHost}}/users/1/rules/4
 
 ### Delete Rule from User
 DELETE {{WebHost}}/users/4/rules/5
 
 ### Get All Rules for User
-GET {{WebHost}}/users/4/rules
+GET {{WebHost}}/users/1/rules

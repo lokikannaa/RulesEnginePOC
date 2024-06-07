@@ -23,7 +23,7 @@
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseNpgsql("Host=localhost;Port=5432;Database=entitlements_db;Username=myuser;Password=mypassword;");
+                .UseNpgsql("Host=localhost;Port=5432;Database=entitlements_db;Username=myuser;Password=mypassword;Include Error Detail=true;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,7 +33,7 @@
                 Converters = { new JsonStringEnumConverter() },
             };
 
-            modelBuilder.Entity<Rule>().HasOne<Rule>().WithMany(r => r.ChildRules).HasForeignKey("RuleNameFK");
+            modelBuilder.Entity<Rule>().HasOne<Rule>().WithMany(r => r.ChildRules).HasForeignKey("ParentRuleId");
             modelBuilder.Entity<Rule>()
                 .HasOne(r => r.Entitlement);
             modelBuilder.Entity<Rule>()
@@ -55,6 +55,13 @@
                 .HasOne(ur => ur.User);
             modelBuilder.Entity<UserRule>()
                 .HasOne(ur => ur.Rule);
+
+            modelBuilder.Entity<Entitlement>().HasData(
+                new Entitlement { Id = 1, Name = "BaseVehicleId" },
+                new Entitlement { Id = 2, Name = "ContentSilo" },
+                new Entitlement { Id = 3, Name = "PartsForEstimating" },
+                new Entitlement { Id = 4, Name = "PartsForEstimating" }
+                );
         }
     }
 

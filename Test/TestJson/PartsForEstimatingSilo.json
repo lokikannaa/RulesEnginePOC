@@ -1,0 +1,18 @@
+{
+  "id": 5,
+  "name": "PartsForEstimatingRule",
+  "entitlementId": 3,
+  "criteria": {
+    "operator": "Or"
+  },
+  "isActive": true,
+  "Actions": {
+    "OnSuccess": {
+      "Name": "PartsForEstimatingAction",
+      "Context": {
+        "part1Allowed": "true",
+        "part2Allowed": "false"
+      }
+    }
+  }
+}

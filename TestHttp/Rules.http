@@ -5,8 +5,7 @@ POST {{WebHost}}/rules
 Content-Type: application/json
 
 {
-  "id": 3,
-  "name": "Parts Silo",
+  "ruleName": "Parts Silo",
   "entitlementId": 2,
   "criteria": {
     "items": [
@@ -20,7 +19,7 @@ Content-Type: application/json
   },
   "childRules": [
     {
-      "name": "VehicleInfoAndTaxonomy",
+      "ruleName": "VehicleInfoAndTaxonomy",
       "entitlementId": 99,
       "criteria": {
         "items": [
@@ -34,12 +33,12 @@ Content-Type: application/json
             "operator": "LessThan",
             "value": "2020"
           },
-          {
+		  {
             "field": "input1.VehicleMake",
             "operator": "IN",
             "value": "Acura, Toyota"
           },
-          {
+		  {
             "field": "input1.TaxonomyId",
             "operator": "IN",
             "value": "100, 200"
@@ -112,7 +111,7 @@ Content-Type: application/json
 }
 
 ### Get Rule by ID
-GET {{WebHost}}/rules/1
+GET {{WebHost}}/rules/4
 
 ### Get All Rules
 GET {{WebHost}}/rules

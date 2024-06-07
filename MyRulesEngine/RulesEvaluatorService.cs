@@ -19,7 +19,8 @@ namespace RulesEnginePOC.MyRulesEngine
                 CustomTypes = [typeof(Utils)],
                 CustomActions = new Dictionary<string, System.Func<ActionBase>>
                 {
-                    { "PartsForEstimatingAction", () => new PartsForEstimatingAction() }
+                    { "PartsForEstimatingAction", () => new PartsForEstimatingAction() },
+                    { "PartsAction", () => new PartsAction() }
                 }
             };
 
@@ -44,11 +45,12 @@ namespace RulesEnginePOC.MyRulesEngine
         {
             var reRules = rules.Select(rule => new RulesEngine.Models.Rule
             {
-                RuleName = rule.Name,
+                RuleName = rule.RuleName,
                 Operator = rule.ChildRules != null ? rule.Criteria.Operator.ToString() : null,
                 SuccessEvent = "true",
                 Expression = GetExpresstionString(rule.Criteria),
-                Actions = rule.Actions
+                Actions = rule.Actions,
+                Rules = rule.ChildRules != null ? ToReRules(rule.ChildRules).ToList() : null
             });
 
             return reRules;
@@ -73,8 +75,8 @@ namespace RulesEnginePOC.MyRulesEngine
                 OperatorType.LessThanOrEqual => $" {field} <= {value} ",
                 OperatorType.And => $" {field} && {value} ",
                 OperatorType.Or => $" {field} || {value} ",
-                OperatorType.In => $"Utils.CheckContains({field}, {value})",
-                OperatorType.ListsEqual => $"Utils.AreListsEqual({field}, {value})",
+                OperatorType.In => $"Utils.CheckContains({field}, \"{value}\") == true",
+                OperatorType.ListsEqual => $"Utils.AreListsEqual({field}, \"{value}\") == true",
                 _ => throw new NotSupportedException($"Operator {operatorType} is not supported."),
             };
         }

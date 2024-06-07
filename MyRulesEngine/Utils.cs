@@ -1,4 +1,6 @@
-﻿namespace RulesEnginePOC.MyRulesEngine
+﻿using System.Text.Json;
+
+namespace RulesEnginePOC.MyRulesEngine
 {
     public static class Utils
     {
@@ -8,7 +10,7 @@
                 return false;
 
             var list = valList.Split(',').ToList();
-            return list.Count == inputList.Count() && list.Except(inputList).Any();
+            return list.Count == inputList.Count() && !list.Except(inputList).Any();
         }
 
         public static bool CheckContains(string check, string valList)
