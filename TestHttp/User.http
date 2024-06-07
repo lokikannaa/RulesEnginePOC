@@ -19,7 +19,7 @@ GET {{WebHost}}/users
 X-User-Id: {{userId}}
 
 ### Add Rule to User
-POST {{WebHost}}/users/4/rules/2
+POST {{WebHost}}/users/4/rules/3
 
 ### Delete Rule from User
 DELETE {{WebHost}}/users/4/rules/5

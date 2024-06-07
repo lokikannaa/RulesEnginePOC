@@ -2,7 +2,7 @@
 using RulesEngine.Models;
 using Rule = RulesEnginePOC.Models.Rule;
 
-namespace RulesEnginePOC.Service
+namespace RulesEnginePOC.MyRulesEngine
 {
     public interface IRulesEvaluatorService
     {

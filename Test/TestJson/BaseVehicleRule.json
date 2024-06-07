@@ -1,0 +1,46 @@
+{
+  "id": 1,
+  "name": "ToyotaVehicles",
+  "entitlementId": 1,
+  "criteria": {
+    "items": [
+      {
+        "field": "input1.VehicleId",
+        "operator": "Equal",
+        "value": "100"
+      },
+      {
+        "field": "input1.VehicleId",
+        "operator": "Equal",
+        "value": "200"
+      }
+    ],
+    "operator": "Or"
+  },
+  "isActive": true,
+  "createdDate": "2024-06-04T19:02:58.987892Z",
+  "updatedDate": "2024-06-04T19:02:58.987972Z"
+},
+  {
+    "id": 2,
+    "name": "HondaVehicles",
+    "entitlementId": 1,
+    "criteria": {
+      "items": [
+        {
+          "field": "input1.VehicleId",
+          "operator": "Equal",
+          "value": "1000"
+        },
+        {
+          "field": "input1.VehicleId",
+          "operator": "Equal",
+          "value": "2000"
+        }
+      ],
+      "operator": "Or"
+    },
+    "isActive": true,
+    "createdDate": "2024-06-04T19:04:55.914002Z",
+    "updatedDate": "2024-06-04T19:04:55.914002Z"
+  }

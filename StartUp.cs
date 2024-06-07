@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RulesEnginePOC.MyRulesEngine;
 using RulesEnginePOC.Service;
+using RulesEnginePOC.Service.Interfaces;
 using System.Text.Json.Serialization;
 
 namespace RulesEnginePOC

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RulesEnginePOC;
 using RulesEnginePOC.Models;
-using RulesEnginePOC.Service;
+using RulesEnginePOC.Service.Interfaces;
 
 public class UserService : IUserService
 {

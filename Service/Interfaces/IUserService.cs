@@ -1,6 +1,6 @@
 ﻿using RulesEnginePOC.Models;
 
-namespace RulesEnginePOC.Service
+namespace RulesEnginePOC.Service.Interfaces
 {
     public interface IUserService
     {

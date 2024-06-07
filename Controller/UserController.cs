@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RulesEnginePOC.Models;
-using RulesEnginePOC.Service;
+using RulesEnginePOC.Service.Interfaces;
 
 namespace RulesEnginePOC.Controller
 {

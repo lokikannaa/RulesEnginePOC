@@ -1,9 +1,3 @@
-@WebHost = http://localhost:5238
-
-  ### Create Rule
-POST {{WebHost}}/rules
-Content-Type: application/json
-
 {
   "id": 3,
   "name": "Parts Silo",
@@ -20,7 +14,7 @@ Content-Type: application/json
   },
   "childRules": [
     {
-      "name": "VehicleInfoAndTaxonomy",
+      "name": "VehicleYear",
       "entitlementId": 99,
       "criteria": {
         "items": [
@@ -33,19 +27,39 @@ Content-Type: application/json
             "field": "input1.VehicleYear",
             "operator": "LessThan",
             "value": "2020"
-          },
+          }
+        ],
+        "operator": "And"
+      },
+      "isActive": true
+    },
+    {
+      "name": "VehicleMake",
+      "entitlementId": 99,
+      "criteria": {
+        "items": [
           {
             "field": "input1.VehicleMake",
             "operator": "IN",
             "value": "Acura, Toyota"
-          },
+          }
+        ],
+        "operator": "Or"
+      },
+      "isActive": true
+    },
+    {
+      "name": "Taxonomies",
+      "entitlementId": 99,
+      "criteria": {
+        "items": [
           {
             "field": "input1.TaxonomyId",
             "operator": "IN",
             "value": "100, 200"
           }
         ],
-        "operator": "And"
+        "operator": "Or"
       },
       "isActive": true
     }
@@ -80,42 +94,3 @@ Content-Type: application/json
     }
   }
 }
-
-### Update Rule
-PUT {{WebHost}}/rules
-Content-Type: application/json
-
-{
-  "Id": "5",
-  "Name": "BaseVehicleId",
-  "Criteria": {
-    "Items": [
-      {
-        "Field": "input1.VehicleId",
-        "Operator": "Equal",
-        "Value": "100"
-      },
-      {
-        "Field": "input1.VehicleId",
-        "Operator": "Equal",
-        "Value": "200"
-      },
-      {
-        "Field": "input1.VehicleId",
-        "Operator": "Equal",
-        "Value": "300"
-      }
-    ],
-    "Operator": "Or"
-  },
-  "IsActive": true
-}
-
-### Get Rule by ID
-GET {{WebHost}}/rules/1
-
-### Get All Rules
-GET {{WebHost}}/rules
-
-### Delete Rule
-DELETE {{WebHost}}/rules/4

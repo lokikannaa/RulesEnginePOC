@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RulesEnginePOC.Service;
+using RulesEnginePOC.Service.Interfaces;
 using System.Dynamic;
 using System.Net;
 
@@ -32,5 +32,42 @@ namespace RulesEnginePOC.Controller
 
             return Ok("I have access to this Vehicle!");
         }
+
+        [HttpGet("partsForEstimating")]
+        public async Task<IActionResult> GetPartsForEstimating(int vehicleId)
+        {
+            IEnumerable<string> requiredEntitlements = ["PartsForEstimating"];
+
+            var results = _entitlementService.Evaluate(requiredEntitlements, HttpContext, Array.Empty<object>());
+
+            return Ok(results.FirstOrDefault(r => r.IsSuccess).ActionResult.Output);
+        }
+
+        [HttpGet("contentSilo")]
+        public async Task<IActionResult> GetContentSilo(ContentSiloRequest request)
+        {
+            IEnumerable<string> requiredEntitlements = ["ContentSilo", "BaseVehicleId"];
+
+            var results = _entitlementService.Evaluate(requiredEntitlements, HttpContext, new dynamic[]
+            {
+                new
+                {
+                    ContentSiloIds = request.ContentSiloIds,
+                    TaxonomyId = request.TaxonomyId,
+                    VehicleYear = request.VehicleYear,
+                    VehicleMake = request.VehicleMake
+                }
+            });
+
+            return Ok(results.FirstOrDefault(r => r.IsSuccess).ActionResult.Output);
+        }
+    }
+
+    public class ContentSiloRequest
+    {
+        public IEnumerable<int>? ContentSiloIds { get; set; }
+        public int? TaxonomyId { get; set; }
+        public int VehicleYear { get; set; }
+        public string VehicleMake { get; set; }
     }
 }

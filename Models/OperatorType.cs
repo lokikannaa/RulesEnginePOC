@@ -8,11 +8,10 @@
         GreaterThanOrEqual,
         LessThan,
         LessThanOrEqual,
-        Contains,
-        NotContains,
         StartsWith,
         EndsWith,
         In,
+        ListsEqual,
 
         And,
         Or,

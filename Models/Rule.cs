@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RulesEngine.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -23,9 +24,10 @@ namespace RulesEnginePOC.Models
         [Column("updated_date")]
         public DateTime UpdatedDate { get; set; }
 
-        public Entitlement? Entitlement { get; set; }
-
-        [NotMapped]
         public IEnumerable<Rule>? ChildRules { get; set; }
+
+        [Column("actions", TypeName = "jsonb")]
+        public RuleActions? Actions { get; set; }
+        public Entitlement? Entitlement { get; set; }
     }
 }

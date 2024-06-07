@@ -1,16 +1,28 @@
-﻿using RulesEngine.Models;
+﻿using RulesEngine.Actions;
+using RulesEngine.Models;
 using RulesEnginePOC.Models;
+using RulesEnginePOC.MyRulesEngine.RuleActions;
 using System.Data;
 using System.Text;
 using Rule = RulesEnginePOC.Models.Rule;
 
-namespace RulesEnginePOC.Service
+namespace RulesEnginePOC.MyRulesEngine
 {
     public class RulesEvaluatorService : IRulesEvaluatorService
     {
         public RulesEngine.RulesEngine CreateRulesEngine(IEnumerable<Rule> rules, string workflowName, ReSettings? reSettings = null)
         {
             var workflows = CreateWorkflows(rules, workflowName).ToList();
+
+            reSettings = new ReSettings
+            {
+                CustomTypes = [typeof(Utils)],
+                CustomActions = new Dictionary<string, System.Func<ActionBase>>
+                {
+                    { "PartsForEstimatingAction", () => new PartsForEstimatingAction() }
+                }
+            };
+
             return new RulesEngine.RulesEngine(workflows.ToArray(), reSettings);
         }
 
@@ -21,6 +33,7 @@ namespace RulesEnginePOC.Service
             {
                 WorkflowName = workflowName,
                 Rules = ToReRules(rules).ToList()
+
             };
             workflows.Add(workflow);
 
@@ -34,7 +47,8 @@ namespace RulesEnginePOC.Service
                 RuleName = rule.Name,
                 Operator = rule.ChildRules != null ? rule.Criteria.Operator.ToString() : null,
                 SuccessEvent = "true",
-                Expression = GetExpresstionString(rule.Criteria)
+                Expression = GetExpresstionString(rule.Criteria),
+                Actions = rule.Actions
             });
 
             return reRules;
@@ -42,26 +56,25 @@ namespace RulesEnginePOC.Service
 
         private string GetExpresstionString(Criteria criteria)
         {
-            var expressions = criteria.Items.Select(GetExpresstionString).ToList();
+            var expressions = criteria.Items == null ? ["true == true"] : criteria.Items!.Select(GetExpresstionString).ToList();
             return string.Join(criteria.Operator.ToString(), expressions);
         }
 
-        private string GetExpresstionString(Criterion criterion)
-        {
-            return $" {criterion.Field} {GetOperator(criterion.Operator)} {criterion.Value} ";
-        }
-        private string GetOperator(OperatorType operatorType)
+        private string GetExpresstionString(Criterion criterion) => GetExpresstion(criterion.Field, criterion.Operator, criterion.Value);
+        private string GetExpresstion(string field, OperatorType operatorType, string value)
         {
             return operatorType switch
             {
-                OperatorType.Equal => "==",
-                OperatorType.NotEqual => "!=",
-                OperatorType.GreaterThan => ">",
-                OperatorType.GreaterThanOrEqual => ">=",
-                OperatorType.LessThan => "<",
-                OperatorType.LessThanOrEqual => "<=",
-                OperatorType.And => "&&",
-                OperatorType.Or => "||",
+                OperatorType.Equal => $" {field} == {value} ",
+                OperatorType.NotEqual => $" {field} != {value} ",
+                OperatorType.GreaterThan => $" {field} > {value} ",
+                OperatorType.GreaterThanOrEqual => $" {field} >= {value} ",
+                OperatorType.LessThan => $" {field} < {value} ",
+                OperatorType.LessThanOrEqual => $" {field} <= {value} ",
+                OperatorType.And => $" {field} && {value} ",
+                OperatorType.Or => $" {field} || {value} ",
+                OperatorType.In => $"Utils.CheckContains({field}, {value})",
+                OperatorType.ListsEqual => $"Utils.AreListsEqual({field}, {value})",
                 _ => throw new NotSupportedException($"Operator {operatorType} is not supported."),
             };
         }

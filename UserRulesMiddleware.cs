@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RulesEnginePOC.Service;
+using RulesEnginePOC.Service.Interfaces;
 
 namespace RulesEnginePOC
 {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RulesEnginePOC.Models;
+using RulesEnginePOC.Service.Interfaces;
 
 namespace RulesEnginePOC.Service
 {
@@ -47,6 +48,7 @@ namespace RulesEnginePOC.Service
                 existingRule.Criteria = rule.Criteria;
                 existingRule.IsActive = rule.IsActive;
                 existingRule.UpdatedDate = DateTime.UtcNow;
+                existingRule.ChildRules = rule.ChildRules;
 
                 await _dbContext.SaveChangesAsync();
             }
