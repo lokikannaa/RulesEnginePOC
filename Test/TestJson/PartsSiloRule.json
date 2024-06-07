@@ -41,7 +41,7 @@
           {
             "field": "input1.VehicleMake",
             "operator": "IN",
-            "value": "Acura, Toyota"
+            "value": "Acura,Toyota"
           }
         ],
         "operator": "Or"

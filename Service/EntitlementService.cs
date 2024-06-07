@@ -55,7 +55,7 @@ namespace RulesEnginePOC.Service
             if (httpContext.Items.TryGetValue("EntitlementRules", out var rules))
             {
                 var userRules = rules as IEnumerable<Rule>;
-                var requiredRules = userRules!.Where(r => requiredEntitlements.Contains(r.Entitlement.Name));
+                var requiredRules = userRules!.Where(r => requiredEntitlements.Contains(r.Entitlement?.Name)).ToList();
 
                 var re = _rulesEvaluatorService.CreateRulesEngine(requiredRules, workflowName);
                 List<RuleResultTree> results = re.ExecuteAllRulesAsync(workflowName, inputs).Result;

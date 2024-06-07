@@ -22,7 +22,7 @@ X-User-Id: {{userId}}
 POST {{WebHost}}/users/1/rules/4
 
 ### Delete Rule from User
-DELETE {{WebHost}}/users/4/rules/5
+DELETE {{WebHost}}/users/1/rules/4
 
 ### Get All Rules for User
 GET {{WebHost}}/users/1/rules

@@ -52,6 +52,7 @@ namespace RulesEnginePOC.Controller
             {
                 new
                 { 
+                    request.VehicleId,
                     request.ContentSiloIds,
                     request.TaxonomyId,
                     request.VehicleYear,
@@ -60,12 +61,13 @@ namespace RulesEnginePOC.Controller
             });
             var outcome = results.FirstOrDefault(r => r.IsSuccess)?.ActionResult.Output;
 
-            return Ok(outcome.ToString());
+            return Ok(outcome?.ToString());
         }
     }
 
     public class ContentSiloRequest
     {
+        public int VehicleId { get; set; }
         public IEnumerable<string>? ContentSiloIds { get; set; }
         public string TaxonomyId { get; set; }
         public int VehicleYear { get; set; }

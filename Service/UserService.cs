@@ -65,7 +65,9 @@ public class UserService : IUserService
     {
         var userRules =  await _dbContext.UserRules
             .Include(ur => ur.Rule)
-            .ThenInclude(r => r.Entitlement)
+                    .ThenInclude(r => r.Entitlement)
+            .Include(ur => ur.Rule)
+                    .ThenInclude(r => r.ChildRules)
             .Where(ur => ur.UserId == userId).ToListAsync();
         return userRules.Select(ur => ur.Rule);
     }

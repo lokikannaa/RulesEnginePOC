@@ -46,11 +46,11 @@ namespace RulesEnginePOC.MyRulesEngine
             var reRules = rules.Select(rule => new RulesEngine.Models.Rule
             {
                 RuleName = rule.RuleName,
-                Operator = rule.ChildRules != null ? rule.Criteria.Operator.ToString() : null,
+                Operator = rule.ChildRules != null && rule.ChildRules.Any() ? rule.Criteria.Operator.ToString() : null,
                 SuccessEvent = "true",
                 Expression = GetExpresstionString(rule.Criteria),
                 Actions = rule.Actions,
-                Rules = rule.ChildRules != null ? ToReRules(rule.ChildRules).ToList() : null
+                Rules = rule.ChildRules != null ? ToReRules(rule.ChildRules).ToList() : Enumerable.Empty<RulesEngine.Models.Rule>()
             });
 
             return reRules;
@@ -58,7 +58,8 @@ namespace RulesEnginePOC.MyRulesEngine
 
         private string GetExpresstionString(Criteria criteria)
         {
-            var expressions = criteria.Items == null ? ["true == true"] : criteria.Items!.Select(GetExpresstionString).ToList();
+            var expressions = criteria.Items == null 
+                ? ["true == true"] : criteria.Items!.Select(GetExpresstionString).ToList();
             return string.Join(criteria.Operator.ToString(), expressions);
         }
 
@@ -75,8 +76,8 @@ namespace RulesEnginePOC.MyRulesEngine
                 OperatorType.LessThanOrEqual => $" {field} <= {value} ",
                 OperatorType.And => $" {field} && {value} ",
                 OperatorType.Or => $" {field} || {value} ",
-                OperatorType.In => $"Utils.CheckContains({field}, \"{value}\") == true",
-                OperatorType.ListsEqual => $"Utils.AreListsEqual({field}, \"{value}\") == true",
+                OperatorType.In => $" Utils.CheckContains({field}, \"{value}\") == true ",
+                OperatorType.ListsEqual => $" Utils.AreListsEqual({field}, \"{value}\") == true ",
                 _ => throw new NotSupportedException($"Operator {operatorType} is not supported."),
             };
         }
