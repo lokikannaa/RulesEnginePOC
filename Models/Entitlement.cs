@@ -7,9 +7,7 @@ namespace RulesEnginePOC.Models
     public class Entitlement
     {
         [Key]
-        [Column("id")]
         public int Id { get; set; }
-        [Column("name")]
         public string Name { get; set; }
     }
 }

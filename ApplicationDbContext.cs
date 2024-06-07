@@ -37,23 +37,22 @@
             modelBuilder.Entity<Rule>()
                 .HasOne(r => r.Entitlement);
             modelBuilder.Entity<Rule>()
-                .Property(r => r.Criteria).HasColumnName("criteria")
+                .Property(r => r.Criteria).HasColumnName("criteria").HasColumnType("jsonb")
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, serializerOptions),
                     v => JsonSerializer.Deserialize<Criteria>(v, serializerOptions)!
                 );
             modelBuilder.Entity<Rule>()
-                .Property(r => r.Actions).HasColumnName("actions")
+                .Property(r => r.Actions).HasColumnName("actions").HasColumnType("jsonb")
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, serializerOptions),
                     v => JsonSerializer.Deserialize<RuleActions>(v, serializerOptions)!
                 );
 
-            modelBuilder.Entity<UserRule>().HasKey(ur => new { ur.UserId, ur.RuleId });
 
+            modelBuilder.Entity<UserRule>().HasKey(ur => new { ur.UserId, ur.RuleId });
             modelBuilder.Entity<UserRule>()
                 .HasOne(ur => ur.User);
-
             modelBuilder.Entity<UserRule>()
                 .HasOne(ur => ur.Rule);
         }
