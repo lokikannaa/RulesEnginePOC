@@ -61,8 +61,7 @@
             modelBuilder.Entity<Entitlement>().HasData(
                 new Entitlement { Id = 1, Name = "BaseVehicleId" },
                 new Entitlement { Id = 2, Name = "ContentSilo" },
-                new Entitlement { Id = 3, Name = "PartsForEstimating" },
-                new Entitlement { Id = 4, Name = "PartsForEstimating" }
+                new Entitlement { Id = 3, Name = "PartType" }
                 );
         }
     }

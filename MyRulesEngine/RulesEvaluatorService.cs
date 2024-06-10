@@ -19,7 +19,7 @@ namespace RulesEnginePOC.MyRulesEngine
                 CustomTypes = [typeof(Utils)],
                 CustomActions = new Dictionary<string, System.Func<ActionBase>>
                 {
-                    { "PartsForEstimatingAction", () => new PartsForEstimatingAction() },
+                    { "PartTypeAction", () => new PartTypeAction() },
                     { "PartsAction", () => new PartsAction() }
                 }
             };

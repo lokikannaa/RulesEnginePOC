@@ -1,0 +1,41 @@
+[
+  {
+    "id": 3,
+    "ruleName": "OEMPartType",
+    "entitlementId": 3,
+    "criteria": {
+      "operator": "Or"
+    },
+    "isActive": true,
+    "Actions": {
+      "OnSuccess": {
+        "Name": "PartTypeAction",
+        "Context": {
+          "entitlementId": 3,
+          "OEM": "true",
+          "Aftermarket": "false"
+        }
+      }
+    }
+  },
+
+  {
+    "id": 4,
+    "ruleName": "AftermarketPartType",
+    "entitlementId": 3,
+    "criteria": {
+      "operator": "Or"
+    },
+    "isActive": true,
+    "Actions": {
+      "OnSuccess": {
+        "Name": "PartTypeAction",
+        "Context": {
+          "entitlementId": 3,
+          "OEM": "false",
+          "Aftermarket": "true"
+        }
+      }
+    }
+  }
+]

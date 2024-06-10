@@ -1,5 +1,5 @@
 {
-  "id": 3,
+  "id": 5,
   "ruleName": "Parts Silo",
   "entitlementId": 2,
   "criteria": { 
@@ -7,7 +7,7 @@
       {
         "field": "input1.ContentSiloIds",
         "operator": "ListsEqual",
-        "value": "10,20"
+        "value": "1,2"
       },
       {
         "field": "input1.VehicleYear",
@@ -22,12 +22,12 @@
       {
         "field": "input1.VehicleMake",
         "operator": "IN",
-        "value": "Acura,Toyota"
+        "value": "Toyota,Ford"
       },
       {
         "field": "input1.TaxonomyId",
         "operator": "IN",
-        "value": "100,200"
+        "value": "1,2"
       }
     ],
     "operator": "And"
@@ -39,12 +39,16 @@
       "Context": {
         "entitlementId": 2,
         "ContentSiloIds": [
-          10,
-          20
+          1,
+          2
         ],
         "VehicleMakes": [
-          "Acura",
-          "Toyota"
+          "Toyota",
+          "Ford"
+        ],
+        "TaxonomyIds": [
+          1,
+          2
         ]
       }
     },
@@ -53,12 +57,16 @@
       "Context": {
         "entitlementId": 2,
         "ContentSiloIds": [
-          10,
-          20
+          1,
+          2
         ],
         "VehicleMakes": [
           "Acura",
-          "Toyota"
+          "Ford"
+        ],
+        "TaxonomyIds": [
+          1,
+          2
         ]
       }
     }

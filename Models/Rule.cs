@@ -21,6 +21,7 @@ namespace RulesEnginePOC.Models
 
         // Note: Parent rule's expression won't be evaluated if child rules are present.
         // https://github.com/microsoft/RulesEngine/issues/574
+        // https://github.com/microsoft/RulesEngine/discussions/329
         public ICollection<Rule>? ChildRules { get; set; }
         public Entitlement? Entitlement { get; set; }
     }

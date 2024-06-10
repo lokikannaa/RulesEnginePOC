@@ -5,20 +5,75 @@ POST {{WebHost}}/rules
 Content-Type: application/json
 
 {
-  "id": 3,
-  "ruleName": "PartsForEstimatingRule",
-  "entitlementId": 3,
-  "criteria": {
-    "operator": "Or"
+  "id": 5,
+  "ruleName": "Parts Silo",
+  "entitlementId": 2,
+  "criteria": { 
+    "items": [
+      {
+        "field": "input1.ContentSiloIds",
+        "operator": "ListsEqual",
+        "value": "1,2"
+      },
+      {
+        "field": "input1.VehicleYear",
+        "operator": "GreaterThan",
+        "value": "2010"
+      },
+      {
+        "field": "input1.VehicleYear",
+        "operator": "LessThan",
+        "value": "2020"
+      },
+      {
+        "field": "input1.VehicleMake",
+        "operator": "IN",
+        "value": "Acura,Ford"
+      },
+      {
+        "field": "input1.TaxonomyId",
+        "operator": "IN",
+        "value": "1,2"
+      }
+    ],
+    "operator": "And"
   },
   "isActive": true,
   "Actions": {
-    "OnSuccess": {
-      "Name": "PartsForEstimatingAction",
+    "OnFailure": {
+      "Name": "PartsAction",
       "Context": {
-        "entitlementId": 3,
-        "part1Allowed": "true",
-        "part2Allowed": "false"
+        "entitlementId": 2,
+        "ContentSiloIds": [
+          1,
+          2
+        ],
+        "VehicleMakes": [
+          "Acura",
+          "Ford"
+        ],
+        "TaxonomyIds": [
+          1,
+          2
+        ]
+      }
+    },
+    "OnSuccess": {
+      "Name": "PartsAction",
+      "Context": {
+        "entitlementId": 2,
+        "ContentSiloIds": [
+          1,
+          2
+        ],
+        "VehicleMakes": [
+          "Acura",
+          "Ford"
+        ],
+        "TaxonomyIds": [
+          1,
+          2
+        ]
       }
     }
   }
@@ -28,7 +83,80 @@ Content-Type: application/json
 PUT {{WebHost}}/rules
 Content-Type: application/json
 
-
+{
+  "id": 5,
+  "ruleName": "Parts Silo",
+  "entitlementId": 2,
+  "criteria": { 
+    "items": [
+      {
+        "field": "input1.ContentSiloIds",
+        "operator": "ListsEqual",
+        "value": "1,2"
+      },
+      {
+        "field": "input1.VehicleYear",
+        "operator": "GreaterThan",
+        "value": "2010"
+      },
+      {
+        "field": "input1.VehicleYear",
+        "operator": "LessThan",
+        "value": "2020"
+      },
+      {
+        "field": "input1.VehicleMake",
+        "operator": "IN",
+        "value": "Toyota,Ford"
+      },
+      {
+        "field": "input1.TaxonomyId",
+        "operator": "IN",
+        "value": "1,2"
+      }
+    ],
+    "operator": "And"
+  },
+  "isActive": true,
+  "Actions": {
+    "OnFailure": {
+      "Name": "PartsAction",
+      "Context": {
+        "entitlementId": 2,
+        "ContentSiloIds": [
+          1,
+          2
+        ],
+        "VehicleMakes": [
+          "Toyota",
+          "Ford"
+        ],
+        "TaxonomyIds": [
+          1,
+          2
+        ]
+      }
+    },
+    "OnSuccess": {
+      "Name": "PartsAction",
+      "Context": {
+        "entitlementId": 2,
+        "ContentSiloIds": [
+          1,
+          2
+        ],
+        "VehicleMakes": [
+          "Acura",
+          "Ford"
+        ],
+        "TaxonomyIds": [
+          1,
+          2
+        ]
+      }
+    }
+  }
+}
 
 ### Get Rule by ID
 GET {{WebHost}}/rules/10

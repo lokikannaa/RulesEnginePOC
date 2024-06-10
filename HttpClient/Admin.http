@@ -2,8 +2,14 @@
 @WebHost = http://localhost:5238
 @userId = 1
 
+# Note:
+# User 1:
+#   BaesVehicleId:  Toyota Vehicles with ID: 101, 104
+#   PartsSilo: 1,2
+# User 2 has access to Ford Vehicles with ID: 102, 105
+
 ### Get Vehicle
-GET {{WebHost}}/admin/vehicle/1000
+GET {{WebHost}}/admin/vehicle/102
 X-User-Id: {{userId}} 
 
 
@@ -13,9 +19,9 @@ Content-Type: application/json
 X-User-Id: {{userId}} 
 
 {
-  "vehicleId" : 100,
-  "contentSiloIds": ["10","20"],
-  "TaxonomyId": "100",
+  "vehicleId" : 101,
+  "contentSiloIds": ["1","2"],
+  "TaxonomyId": "1",
   "vehicleMake": "Toyota",
-  "VehicleYear": "2018"
+  "VehicleYear": "2020"
 }

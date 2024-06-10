@@ -9,12 +9,12 @@
         {
           "field": "input1.VehicleId",
           "operator": "Equal",
-          "value": "100"
+          "value": "101"
         },
         {
           "field": "input1.VehicleId",
           "operator": "Equal",
-          "value": "200"
+          "value": "104"
         }
       ],
       "operator": "Or"
@@ -25,25 +25,23 @@
   // Rule 2
   {
     "id": 2,
-    "ruleName": "HondaVehicles",
+    "ruleName": "FordVehicles",
     "entitlementId": 1,
     "criteria": {
       "items": [
         {
           "field": "input1.VehicleId",
           "operator": "Equal",
-          "value": "1000"
+          "value": "102"
         },
         {
           "field": "input1.VehicleId",
           "operator": "Equal",
-          "value": "2000"
+          "value": "105"
         }
       ],
       "operator": "Or"
     },
-    "isActive": true,
-    "createdDate": "2024-06-04T19:04:55.914002Z",
-    "updatedDate": "2024-06-04T19:04:55.914002Z"
+    "isActive": true
   }
 ]
