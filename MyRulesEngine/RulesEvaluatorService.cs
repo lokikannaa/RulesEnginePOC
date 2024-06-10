@@ -24,7 +24,7 @@ namespace RulesEnginePOC.MyRulesEngine
                 }
             };
 
-            return new RulesEngine.RulesEngine(workflows.ToArray(), reSettings);
+             return new RulesEngine.RulesEngine(workflows.ToArray(), reSettings);
         }
 
         private IEnumerable<Workflow> CreateWorkflows(IEnumerable<Rule> rules, string workflowName)
@@ -50,7 +50,7 @@ namespace RulesEnginePOC.MyRulesEngine
                 SuccessEvent = "true",
                 Expression = GetExpresstionString(rule.Criteria),
                 Actions = rule.Actions,
-                Rules = rule.ChildRules != null ? ToReRules(rule.ChildRules).ToList() : Enumerable.Empty<RulesEngine.Models.Rule>()
+                Rules = rule.ChildRules != null && rule.ChildRules.Any() ? ToReRules(rule.ChildRules).ToList() : Enumerable.Empty<RulesEngine.Models.Rule>()
             });
 
             return reRules;
