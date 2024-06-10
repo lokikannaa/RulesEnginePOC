@@ -1,30 +1,31 @@
 // Rule 1
-{
-  "id": 1,
-  "name": "ToyotaVehicles",
-  "entitlementId": 1,
-  "criteria": {
-    "items": [
-      {
-        "field": "input1.VehicleId",
-        "operator": "Equal",
-        "value": "100"
-      },
-      {
-        "field": "input1.VehicleId",
-        "operator": "Equal",
-        "value": "200"
-      }
-    ],
-    "operator": "Or"
+[
+  {
+    "id": 1,
+    "ruleName": "ToyotaVehicles",
+    "entitlementId": 1,
+    "criteria": {
+      "items": [
+        {
+          "field": "input1.VehicleId",
+          "operator": "Equal",
+          "value": "100"
+        },
+        {
+          "field": "input1.VehicleId",
+          "operator": "Equal",
+          "value": "200"
+        }
+      ],
+      "operator": "Or"
+    },
+    "isActive": true
   },
-  "isActive": true
-}
 
-// Rule 2
+  // Rule 2
   {
     "id": 2,
-    "name": "HondaVehicles",
+    "ruleName": "HondaVehicles",
     "entitlementId": 1,
     "criteria": {
       "items": [
@@ -45,3 +46,4 @@
     "createdDate": "2024-06-04T19:04:55.914002Z",
     "updatedDate": "2024-06-04T19:04:55.914002Z"
   }
+]

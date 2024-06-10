@@ -33,7 +33,9 @@
                 Converters = { new JsonStringEnumConverter() },
             };
 
-            modelBuilder.Entity<Rule>().HasOne<Rule>().WithMany(r => r.ChildRules).HasForeignKey("ParentRuleId");
+            modelBuilder.Entity<Rule>().HasOne<Rule>().WithMany(r => r.ChildRules)
+                .HasForeignKey("ParentRuleId")
+                .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Rule>()
                 .HasOne(r => r.Entitlement);
             modelBuilder.Entity<Rule>()

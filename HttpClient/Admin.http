@@ -14,7 +14,7 @@ X-User-Id: {{userId}}
 
 {
   "vehicleId" : 100,
-  "contentSiloIds": ["10"],
+  "contentSiloIds": ["10","20"],
   "TaxonomyId": "100",
   "vehicleMake": "Toyota",
   "VehicleYear": "2018"

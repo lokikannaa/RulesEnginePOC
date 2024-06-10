@@ -19,6 +19,8 @@ namespace RulesEnginePOC.Models
         public DateTime UpdatedDate { get; set; }
         public RuleActions? Actions { get; set; }
 
+        // Note: Parent rule's expression won't be evaluated if child rules are present.
+        // https://github.com/microsoft/RulesEngine/issues/574
         public ICollection<Rule>? ChildRules { get; set; }
         public Entitlement? Entitlement { get; set; }
     }

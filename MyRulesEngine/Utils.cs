@@ -1,10 +1,8 @@
-﻿using System.Text.Json;
-
-namespace RulesEnginePOC.MyRulesEngine
+﻿namespace RulesEnginePOC.MyRulesEngine
 {
     public static class Utils
     {
-        public static bool AreListsEqual(IEnumerable<string> inputList, string valList)
+        public static bool AreListsEqual(IEnumerable<string>? inputList, string valList)
         {
             if (inputList == null || String.IsNullOrEmpty(valList))
                 return false;
@@ -18,7 +16,7 @@ namespace RulesEnginePOC.MyRulesEngine
             if (String.IsNullOrEmpty(check) || String.IsNullOrEmpty(valList))
                 return false;
 
-            var list = valList.Split(',').ToList();
+            var list = valList.Split(',').Select(l => l.Trim()).ToList();
             return list.Contains(check);
         }
     }

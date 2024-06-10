@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RulesEnginePOC.Models;
 using RulesEnginePOC.Service.Interfaces;
 using System.Net;
 
@@ -36,37 +37,23 @@ namespace RulesEnginePOC.Controller
         [HttpGet("parts")]
         public IActionResult GetParts(GetPartsRequest request)
         {
-            //IEnumerable<string> requiredEntitlements = ["PartsForEstimating", "ContentSilo", "BaseVehicleId"];
-            IEnumerable<string> requiredEntitlements = ["ContentSilo"];
+            IEnumerable<string> requiredEntitlements = ["PartsForEstimating", "ContentSilo", "BaseVehicleId"];
             var results = _entitlementService.Evaluate(requiredEntitlements, HttpContext,
             [
                 new
                 {
-                    request.VehicleId,
-                    request.ContentSiloIds,
-                    request.TaxonomyId,
-                    request.VehicleYear,
-                    request.VehicleMake
+                   request.VehicleId,
+                   request.ContentSiloIds,
+                   request.TaxonomyId,
+                   request.VehicleYear,
+                   request.VehicleMake
                 }
             ]);
+
+            var 
             var outcome = results.FirstOrDefault(r => r.IsSuccess)?.ActionResult.Output;
 
             return Ok(outcome?.ToString());
         }
-    }
-
-    public class GetPartsRequest
-    {
-        public int VehicleId { get; set; }
-        public IEnumerable<string> ContentSiloIds { get; set; }
-        public string? TaxonomyId { get; set; }
-        public int? VehicleYear { get; set; }
-        public string? VehicleMake { get; set; }
-    }
-
-    public class GetPartsReponse
-    {
-        public IEnumerable<string> ContentSiloIds { get; set; }
-        public IEnumerable<string> VehicleMakes { get; set; }
     }
 }

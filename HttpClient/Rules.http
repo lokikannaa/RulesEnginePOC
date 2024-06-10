@@ -5,76 +5,20 @@ POST {{WebHost}}/rules
 Content-Type: application/json
 
 {
-  "ruleName": "Parts Silo",
-  "entitlementId": 2,
+  "id": 3,
+  "ruleName": "PartsForEstimatingRule",
+  "entitlementId": 3,
   "criteria": {
-    "items": [
-      {
-        "field": "input1.ContentSiloIds",
-        "operator": "ListsEqual",
-        "value": "10,20"
-      }
-    ],
     "operator": "Or"
   },
-  "childRules": [
-    {
-      "ruleName": "VehicleInfoAndTaxonomy",
-      "entitlementId": 99,
-      "criteria": {
-        "items": [
-          {
-            "field": "input1.VehicleYear",
-            "operator": "GreaterThan",
-            "value": "2010"
-          },
-          {
-            "field": "input1.VehicleYear",
-            "operator": "LessThan",
-            "value": "2020"
-          },
-		  {
-            "field": "input1.VehicleMake",
-            "operator": "IN",
-            "value": "Acura, Toyota"
-          },
-		  {
-            "field": "input1.TaxonomyId",
-            "operator": "IN",
-            "value": "100, 200"
-          }
-        ],
-        "operator": "And"
-      },
-      "isActive": true
-    }
-  ],
   "isActive": true,
   "Actions": {
-    "OnFailure": {
-      "Name": "PartsAction",
-      "Context": {
-        "ContentSiloIds": [
-          10,
-          20
-        ],
-        "VehicleMakes": [
-          "Acura",
-          "Toyota"
-        ]
-      }
-    },
     "OnSuccess": {
-      "Name": "PartsAction",
+      "Name": "PartsForEstimatingAction",
       "Context": {
-        "ContentSiloIds": [
-          10,
-          20
-        ],
-        "VehicleMakes": [
-          "Acura",
-          "Toyota"
-        ]
+        "entitlementId": 3,
+        "part1Allowed": "true",
+        "part2Allowed": "false"
       }
     }
   }
@@ -84,37 +28,13 @@ Content-Type: application/json
 PUT {{WebHost}}/rules
 Content-Type: application/json
 
-{
-  "Id": "5",
-  "Name": "BaseVehicleId",
-  "Criteria": {
-    "Items": [
-      {
-        "Field": "input1.VehicleId",
-        "Operator": "Equal",
-        "Value": "100"
-      },
-      {
-        "Field": "input1.VehicleId",
-        "Operator": "Equal",
-        "Value": "200"
-      },
-      {
-        "Field": "input1.VehicleId",
-        "Operator": "Equal",
-        "Value": "300"
-      }
-    ],
-    "Operator": "Or"
-  },
-  "IsActive": true
-}
+
 
 ### Get Rule by ID
-GET {{WebHost}}/rules/4
+GET {{WebHost}}/rules/10
 
 ### Get All Rules
 GET {{WebHost}}/rules
 
 ### Delete Rule
-DELETE {{WebHost}}/rules/4
+DELETE {{WebHost}}/rules/6

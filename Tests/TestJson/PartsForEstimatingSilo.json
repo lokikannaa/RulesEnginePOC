@@ -1,6 +1,6 @@
 {
   "id": 5,
-  "name": "PartsForEstimatingRule",
+  "ruleName": "PartsForEstimatingRule",
   "entitlementId": 3,
   "criteria": {
     "operator": "Or"
@@ -10,6 +10,7 @@
     "OnSuccess": {
       "Name": "PartsForEstimatingAction",
       "Context": {
+        "entitlementId": 3,
         "part1Allowed": "true",
         "part2Allowed": "false"
       }

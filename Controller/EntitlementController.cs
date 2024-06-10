@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RulesEnginePOC.Models;
 using RulesEnginePOC.Service.Interfaces;
-using System.Dynamic;
-using System.Net;
 
 namespace RulesEnginePOC.Controller
 {
