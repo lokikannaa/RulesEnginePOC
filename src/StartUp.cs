@@ -16,7 +16,7 @@ namespace RulesEnginePOC
             // Register services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRuleService, RuleService>();
-            services.AddScoped<IRulesEvaluatorService, RulesEvaluatorService>();
+            services.AddScoped<IRulesEngineService, RulesEngineService>();
             services.AddScoped<IEntitlementService, EntitlementService>();
 
             services.AddControllers()

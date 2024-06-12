@@ -50,44 +50,23 @@ namespace RulesEnginePOC.Controller
             }
 
             IEnumerable<string> requiredEntitlements = ["PartType", "ContentSilo"];
-            var outcome = _entitlementService.Evaluate(requiredEntitlements, HttpContext,
-            [
-                new
+
+            var inputs = new dynamic[]
                 {
-                   request.VehicleId,
-                   request.ContentSiloIds,
-                   request.TaxonomyId,
-                   request.VehicleYear,
-                   request.VehicleMake
-                }
-            ]);
+                    new {
+                            request.VehicleId,
+                            request.ContentSiloIds,
+                            request.TaxonomyId,
+                            request.VehicleYear,
+                            request.VehicleMake
+                        }
+                };
 
-            var result = _allParts;
+            var outcome = _entitlementService.Evaluate(requiredEntitlements, HttpContext, inputs);
 
-            var isAllPass = outcome.TrueForAll(r => r.IsSuccess); // return all parts filtered by request params
+            var partsResult = _allParts;
 
-            //if (isAllPass)
-            //{
-            //    var x = result
-            //        .Where(p => p.ApplicableVehicles.Any(v => v.Make == request.VehicleMake && v.Year == request.VehicleYear && v.BaseVehicleId == request.VehicleId))
-            //        .Where(p => p.TaxonomyId == request.TaxonomyId)
-            //        .Where(p => request.ContentSiloIds != null && request.ContentSiloIds.Contains(p.contentSiloId));
-            //    result = result
-            //        .Where(p => p.ApplicableVehicles.Any(v => v.Make == request.VehicleMake && v.Year == request.VehicleYear && v.BaseVehicleId == request.VehicleId))
-            //        .Where(p => p.TaxonomyId == request.TaxonomyId)
-            //        .Where(p => request.ContentSiloIds != null && request.ContentSiloIds.Contains(p.contentSiloId))
-            //        .Select(x => new Part
-            //        {
-            //            contentSiloId = x.contentSiloId,
-            //            Name = x.Name,
-            //            PartNumber = x.PartNumber,
-            //            PartType = x.PartType,
-            //            TaxonomyId = x.TaxonomyId,
-            //            ApplicableVehicles = x.ApplicableVehicles.Where(v => v.BaseVehicleId == request.VehicleId)
-            //        });
-
-            //    return Ok(result);
-            //}
+            //var isAllPass = outcome.TrueForAll(r => r.IsSuccess);
 
             var actionResults = outcome
                     .Where(o => o.ActionResult.Output != null)
@@ -107,9 +86,10 @@ namespace RulesEnginePOC.Controller
             var contentSiloEntitlement = actionResults.FirstOrDefault(r => r.EntitlementId == 2);
             var partTypeEntitlement = actionResults.FirstOrDefault(r => r.EntitlementId == 3);
 
-            if (hasAccessToBaseVehicled)
+            // Filter parts based on BaseVehicleId
+            if (hasAccessToBaseVehicled && request.VehicleId != null)
             {
-                result = result
+                partsResult = partsResult
                     .Where(p => p.ApplicableVehicles.Any(v => v.BaseVehicleId == request.VehicleId))
                     .Select(x => new Part
                     {
@@ -122,25 +102,27 @@ namespace RulesEnginePOC.Controller
                     });
             }
 
+            // Filter parts based on ContentSilo
             if (contentSiloEntitlement != null && contentSiloEntitlement.ContentSiloIds != null)
             {
-                result = result.Where(p => contentSiloEntitlement.ContentSiloIds.Contains(p.contentSiloId));
+                partsResult = partsResult.Where(p => contentSiloEntitlement.ContentSiloIds.Contains(p.contentSiloId));
             }
 
+            // Filter parts based on PartType
             if (partTypeEntitlement != null)
             {
                 if (partTypeEntitlement.HasOEMAccess == false)
                 {
-                    result = result.Where(p => p.PartType != "OEM");
+                    partsResult = partsResult.Where(p => p.PartType != "OEM");
                 }
 
                 if (partTypeEntitlement.HasAftermarketAccess == false)
                 {
-                    result = result.Where(p => p.PartType != "Aftermarket");
+                    partsResult = partsResult.Where(p => p.PartType != "Aftermarket");
                 }
             }
 
-            return Ok(result);
+            return Ok(partsResult);
         }
 
     }

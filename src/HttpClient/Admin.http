@@ -1,12 +1,17 @@
 # For more info on HTTP files go to https://aka.ms/vs/httpfile
 @WebHost = http://localhost:5238
-@userId = 1
+@userId = 3
 
-# Note:
 # User 1:
-#   BaesVehicleId:  Toyota Vehicles with ID: 101, 104
-#   PartsSilo: 1,2
-# User 2 has access to Ford Vehicles with ID: 102, 105
+#  PartsSilo: 1,2
+#  PartType: only OEM
+#  BaesVehicleId:Toyota VehicleID: 101,104
+
+# User 2:
+#  BaesVehicleId:Ford VehicleIds: 102, 105
+
+# User 3:
+# AdminUser: No Entitlements
 
 ### Get Vehicle
 GET {{WebHost}}/admin/vehicle/102
@@ -19,7 +24,7 @@ Content-Type: application/json
 X-User-Id: {{userId}} 
 
 {
-  "vehicleId" : 101,
+  "vehicleId" : null,
   "contentSiloIds": ["1","2"],
   "TaxonomyId": "1",
   "vehicleMake": "Toyota",

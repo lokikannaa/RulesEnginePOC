@@ -2,7 +2,7 @@
 {
     public class GetPartsRequest
     {
-        public int VehicleId { get; set; }
+        public int? VehicleId { get; set; }
         public IEnumerable<int>? ContentSiloIds { get; set; }
         public int? TaxonomyId { get; set; }
         public int? VehicleYear { get; set; }

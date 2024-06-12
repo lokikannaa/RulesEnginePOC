@@ -6,8 +6,8 @@ POST {{WebHost}}/users
 Content-Type: application/json
 
 {
-    "userName": "Bob",
-    "apiKey": "B123"
+    "userName": "Admin",
+    "apiKey": "A123"
 }
 
 ### Delete User

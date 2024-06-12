@@ -8,7 +8,7 @@ using Rule = RulesEnginePOC.Models.Rule;
 
 namespace RulesEnginePOC.MyRulesEngine
 {
-    public class RulesEvaluatorService : IRulesEvaluatorService
+    public class RulesEngineService : IRulesEngineService
     {
         public RulesEngine.RulesEngine CreateRulesEngine(IEnumerable<Rule> rules, string workflowName, ReSettings? reSettings = null)
         {

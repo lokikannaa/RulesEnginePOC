@@ -9,8 +9,8 @@ namespace RulesEnginePOC.Service
 {
     public class EntitlementService : IEntitlementService
     {
-        private readonly IRulesEvaluatorService _rulesEvaluatorService;
-        public EntitlementService(IRulesEvaluatorService rulesEvaluatorService)
+        private readonly IRulesEngineService _rulesEvaluatorService;
+        public EntitlementService(IRulesEngineService rulesEvaluatorService)
         {
             _rulesEvaluatorService = rulesEvaluatorService;
         }
